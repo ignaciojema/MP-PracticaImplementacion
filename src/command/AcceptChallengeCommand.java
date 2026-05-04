@@ -7,10 +7,12 @@ package command;
 import control.AuthenticationManager;
 import control.BattleMode;
 import control.GameContext;
+import control.MenuMode;
 import control.UserManager;
 import domain.Challenge;
 import domain.ChallengeMediator;
 import domain.Player;
+import interaction.MenuScreen;
 import java.util.List;
 
 /**
@@ -86,6 +88,7 @@ b) Rechazar
 		        defying.setGold(Math.max(0, defying.getGold() - penalty));
 
 		        userManager.save(); // persistimos el cambio de oro
+                context.setNextMode(new MenuMode(new MenuScreen(context), context, authManager, userManager, mediator));
                 return;
             }
 
