@@ -3,7 +3,6 @@ package domain;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Scanner;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;

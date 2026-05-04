@@ -4,12 +4,13 @@ import control.GameContext;
 
 public class StatsCalculator {
 	private int type;
-    private Algorithm DamageStrategy ;
-    private  Algorithm DefenseStrategy;
+    private final Algorithm DamageStrategy ;
+    private final  Algorithm DefenseStrategy;
     
-	public StatsCalculator(){
+	public StatsCalculator(int type){
     	this.DamageStrategy= new DamageAlgorithm(type);
 	    this.DefenseStrategy= new DefenceAlgorithm(type);
+		this.type = type;
     }
 
 	public int calculatedamage(GameCharacter c) {
@@ -20,7 +21,7 @@ public class StatsCalculator {
     return this.DefenseStrategy.execute(c);
     }
     public int[] calculatehealth(GameCharacter c){
-     int[] result={c.getHealth(),c.getMinion().getHealth()};
+     int[] result={c.getHealth(),c.getMinionHealth()};
     return result;
     }
 
@@ -41,19 +42,19 @@ public class StatsCalculator {
         atk2=0;
         if (stats1[0]<=0 && stats2[0]<=0){
             win=true;
-            g.setdraw(true);
+            g.setDraw(true);
         }
         else if (stats1[0]<=0){
             win=true;
             winner=g.getCharacter2();
             looser=g.getCharacter1();
-            g.setdraw(false);
+            g.setDraw(false);
         }
         else if (stats2[0]<=0){
             win=true;
             winner=g.getCharacter1();
             looser=g.getCharacter2();
-            g.setdraw(false);  
+            g.setDraw(false);  
         } else {
         dmg1= calculatedamage(g.getCharacter1());
         dmg2= calculatedamage(g.getCharacter2());
@@ -119,7 +120,7 @@ public class StatsCalculator {
         ((Lycanthrope) g.getCharacter1()).setRage(0);
     }
     if (g.getCharacter2() instanceof Lycanthrope){
-        ((Lycanthrope) g.getCharacter1()).setRage(0);
+        ((Lycanthrope) g.getCharacter2()).setRage(0);
     }
     if (g.getCharacter1() instanceof Vampire){
         ((Vampire) g.getCharacter1()).setBloodPoints(0);
@@ -132,7 +133,7 @@ public class StatsCalculator {
     return g; 
     } 
     
-    }
+}
 
 
 
