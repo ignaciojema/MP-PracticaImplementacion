@@ -94,8 +94,8 @@ public class MenuMode implements Mode{
 
 		    Challenge c = challengeMediator.challengesForPlayer(player).get(0);
 		    context.setNextMode(new RestrictedChallengeMode(context, userManager, challengeMediator, c, authManager));
-    return context.getNextMode();
-}
+    		return context.getNextMode();
+		}
 
 		if (command == null) {
 			throw new IllegalStateException(
