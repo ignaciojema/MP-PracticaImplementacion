@@ -33,6 +33,10 @@ public class LaunchChallengeCommand implements Command{
     public void execute() {
         Scanner sc = context.getScanner();
         Player defying = (Player) context.getCurrentUser();
+		if (defying.getGameCharacter() == null){
+			System.out.println("Jugador sin personaje.");
+			return;
+		}
 
         System.out.println("Nick del rival:");
         String rivalNick = sc.nextLine().trim();
