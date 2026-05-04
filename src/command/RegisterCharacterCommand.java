@@ -54,7 +54,7 @@ public class RegisterCharacterCommand implements Command{
 	@Override
 	public void execute() {
             Player playerr = (Player) context.getCurrentUser();
-            if (playerr.getCharac()==null){
+            if (playerr.getCharacter() == null){
                 menu();
                 int chose = requestNumber("Escoge:",0,2,context.getScanner());
                 switch (chose){
