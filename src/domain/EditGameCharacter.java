@@ -64,11 +64,18 @@ public abstract class EditGameCharacter {
                 break;
             }
             case 1:{
+                if (characterr instanceof Vampire vamp){
+                VampireCharacterBuilder vampi = new VampireCharacterBuilder(ability,armor,weapon,strength,weakness);
+                vampi.setMinion(characterr, sc, null);   
+                }else{
+                    HunterCharacterBuilder hunti = new HunterCharacterBuilder(ability,armor,weapon,strength,weakness);
+                    hunti.setMinion(characterr, sc, null);   
+                }        
                 
             }
             case 2:{
                 if (characterr.getMinion() instanceof Demon demonion) {
-                    changeDemon(demonion,sc);
+                    changeDemon(demonion,sc, characterr);
                 } else if (characterr.getMinion() instanceof Ghoul ghoul) {
                     changeGhoul(ghoul,sc);
                 }else if (characterr.getMinion() instanceof Human human) {
@@ -81,13 +88,43 @@ public abstract class EditGameCharacter {
         }
     }
     
-    protected void changeDemon(Demon demonion, Scanner sc){
+    protected void changeDemon(Demon demonion, Scanner sc, GameCharacter characterr){
         System.out.println("Escoge que quieres modificar");
         System.out.println("0) No cambiar nada");
         System.out.println("1) Cambiar el nombre del demonio");
         System.out.println("2) Cambiar la salud del demonio");
         System.out.println("3) Cambiar el pacto del demonio");      
         System.out.println("4) Cambiar el conjunto de esbirros del demonio");
+        int election =0;
+        election = requestNumber("Escoge", 0,4,sc);
+        switch (election){
+            case 0:{
+                System.out.println("Terminado");
+                break;
+            }
+            case 1:{
+                demonion.setName(requestString("Elige el nombre del demonio", sc));
+                break;
+            }
+            case 2:{
+                demonion.setHealth(requestNumber("Elige la salud del demonio",1,3,sc));    
+                break;
+            }
+            case 3:{
+                demonion.setPact(requestString("Escribe el pacto con el demonio",sc));
+                break;
+            }
+            case 4:{
+                if (characterr instanceof Vampire vamp){
+                    VampireCharacterBuilder vampi = new VampireCharacterBuilder(ability,armor,weapon,strength,weakness);
+                    vampi.setMinion(characterr, sc, demonion);   
+                }else{
+                    HunterCharacterBuilder hunti = new HunterCharacterBuilder(ability,armor,weapon,strength,weakness);
+                    hunti.setMinion(characterr, sc, demonion);   
+                }             
+                break;
+            }
+        }                  
     }
     
     protected void changeGhoul(Ghoul ghoul, Scanner sc){
@@ -142,6 +179,7 @@ public abstract class EditGameCharacter {
             case 3:{
                 String[] loyalty = {"ALTA", "MEDIA", "BAJA"};
                 human.setLoyalty(loyalty[requestNumber("Elige la lealtad del esbirro \n0)ALTA \n1)MEDIA \n2) BAJA", 0,2,sc)]);
+                break;
             }
         }       
     }
