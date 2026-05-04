@@ -13,6 +13,7 @@ import command.ExitCommand;
 import command.ManageUsersCommand;
 import command.RegisterCharacterCommand;
 import command.SendChallengeCommand;
+import command.UnregisterCharacterCommand;
 import command.UnregisterCommand;
 import command.ValidateChallengeCommand;
 import domain.Administrator;
@@ -57,12 +58,13 @@ public class MenuMode implements Mode{
 		commands = new HashMap<>();
 
 		commands.put('a', new SendChallengeCommand(context, userManager, challengeMediator));
-		commands.put('b', new AcceptChallengeCommand(context, userManager, challengeMediator));
+		commands.put('b', new AcceptChallengeCommand(context, userManager, authManager, challengeMediator));
 		commands.put('c', new RegisterCharacterCommand(context));
-		commands.put('d', new EditCharacterCommand());
+		commands.put('d', new EditCharacterCommand(context,userManager));
 		commands.put('e', new CheckRankingCommand(context, userManager, authManager, challengeMediator));
-		commands.put('f', new UnregisterCommand(context, userManager, authManager, challengeMediator));
-		commands.put('g', new ExitCommand(context));
+		commands.put('f', new UnregisterCharacterCommand(context, userManager, authManager, challengeMediator));
+		commands.put('g', new UnregisterCommand(context, userManager, authManager, challengeMediator));
+		commands.put('h', new ExitCommand(context));
 	}	
 
 	private void initAdminCommands() {
@@ -92,7 +94,6 @@ public class MenuMode implements Mode{
 					"Ningun comando asociado con esta opcion: " + option
 			);
 		}
-
 		command.execute();
 		return context.getNextMode();
 	}

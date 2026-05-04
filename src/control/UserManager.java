@@ -4,6 +4,7 @@
  */
 package control;
 
+import domain.Player;
 import domain.User;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,6 +48,13 @@ public class UserManager {
 			e.printStackTrace();
 			usuarios = new HashMap<>();
 		}
+		
+		for (User u : usuarios.values()) {
+    		if (u instanceof Player p) {
+        		Player.updateNextRegisterNumber(p.getRegisterNumber());
+    		}
+		}
+
 	}
 
 	// ========= SAVE =========
@@ -76,5 +84,8 @@ public class UserManager {
 	public Collection<User> getUsers() {
 		return usuarios.values();
 	}
-	
+
+        public Map<String, User> getUsuarios() {
+            return usuarios;
+        }	
 }
