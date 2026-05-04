@@ -27,7 +27,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Ignacio Jerónimo Martín i.jeronimo.2024@alumnos.urjc.es
+ * @author Ignacio Jerónimo Martín i.jeronimo.2024@alumnos.urjc.e
  */
 public class EditCharacterCommand implements Command{
     private final GameContext context;
