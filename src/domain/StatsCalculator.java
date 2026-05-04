@@ -161,6 +161,9 @@ public class StatsCalculator {
     if (g.getCharacter2() instanceof Vampire){
         ((Vampire) g.getCharacter2()).setBloodPoints(0);
     }
+    if (g.getCharacter2() instanceof Hunter){
+        ((Hunter) g.getCharacter2()).setAttitude(3);
+    }
     g.setCharacter1(winner);
     g.setCharacter2(looser);
     return g; 
