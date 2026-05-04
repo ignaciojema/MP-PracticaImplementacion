@@ -131,8 +131,8 @@ public class StatsCalculator {
             if (g.getCharacter1() instanceof Lycanthrope){
                 ((Lycanthrope) g.getCharacter1()).setRage(((Lycanthrope) g.getCharacter1()).getRage() + 3);
             }
-            if (g.getCharacter2() instanceof Hunter){
-                ((Hunter)g.getCharacter2()).setAttitude(((Hunter)g.getCharacter2()).getAttitude() - 1);
+            if (g.getCharacter1() instanceof Hunter){
+                ((Hunter)g.getCharacter1()).setAttitude(((Hunter)g.getCharacter1()).getAttitude() - 1);
             }
         }  
         
@@ -168,6 +168,6 @@ public class StatsCalculator {
     g.setCharacter2(looser);
     return g; 
 
-    } 
+    }
 
 }

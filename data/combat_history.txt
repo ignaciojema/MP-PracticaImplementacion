@@ -1,0 +1,10 @@
+--- REGISTRO DE COMBATE ---
+Fecha: 04-05-2026 23:46:42
+Desafiante: c
+Desafiado: b
+Vencedor:c
+Oro Ganado: 10
+Rondas empleadas: 50
+Ninguno de los esbirros quedo con vida
+---------------------------
+
