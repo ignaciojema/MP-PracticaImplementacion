@@ -9,10 +9,15 @@ import control.UserManager;
 import domain.Armor;
 import domain.Discipline;
 import domain.Gift;
+import domain.Hunter;
 import domain.HunterEditCharacter;
+import domain.Lycanthrope;
+import domain.LycanthropeEditCharacter;
 import domain.Player;
 import domain.Strength;
 import domain.User;
+import domain.Vampire;
+import domain.VampireEditCharacter;
 import domain.Weakness;
 import domain.Weapons;
 import domain.Will;
@@ -69,10 +74,161 @@ public class EditCharacterCommand implements Command{
                     System.out.println("No tienes un personaje para editar");
                 }
             } else{
+                HashMap<String,Player> players = new HashMap<>();
+                for(User us : um.getUsuarios().values()){
+                    if (us instanceof Player pl){
+                        players.put(pl.getName(), pl);
+                    }    
+                }
                 System.out.println("Elige al usuario al que quieres editarle el personaje");
-                
-                String[] userss = showOptions(,context.getScanner());
-                
+                String[] userss = showOptions(players,context.getScanner());
+                election = requestNumber("Elige una opcion",0, userss.length , context.getScanner());
+                if (election!=0){
+                    int election1=0;
+                    Player mainPlayer = players.get(userss[election-1]);   
+                    if (mainPlayer.getGameCharacter() instanceof Vampire vamp){
+                        VampireEditCharacter vampEdit = new VampireEditCharacter(discipline,armor,weapon,strength,weakness);
+                        do{
+                            vampEdit.menu();
+                            election1=requestNumber("Escoge",0,9,context.getScanner());
+                            switch (election1){
+                                case 0:{
+                                    break;
+                                }
+                                case 1:{
+                                    vampEdit.changeName(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 2:{
+                                    vampEdit.changePower(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 3:{
+                                    vampEdit.changeAbility(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 4:{
+                                    vampEdit.changeMinion(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 5:{
+                                    vampEdit.changeModifier(mainPlayer.getGameCharacter(), context.getScanner(),true);
+                                    break;
+                                }
+                                case 6:{
+                                    vampEdit.changeModifier(mainPlayer.getGameCharacter(), context.getScanner(),false);
+                                    break;
+                                }
+                                case 7:{
+                                    vampEdit.changePrincipalEquipment(mainPlayer.getGameCharacter(), context.getScanner(),true);
+                                    break;
+                                }
+                                case 8:{
+                                    vampEdit.changePrincipalEquipment(mainPlayer.getGameCharacter(), context.getScanner(),false);
+                                    break;
+                                }
+                                case 9:{
+                                    vampEdit.changeAge(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                           }
+                        }while(election1!=0);
+                    }else if (mainPlayer.getGameCharacter() instanceof Lycanthrope lycan){
+                        LycanthropeEditCharacter lycanEdit = new LycanthropeEditCharacter(will,armor,weapon,strength,weakness);
+                        do{
+                            lycanEdit.menu();
+                            election1=requestNumber("Escoge",0,10,context.getScanner());
+                            switch (election1){
+                                case 0:{
+                                    break;
+                                }
+                                case 1:{
+                                    lycanEdit.changeName(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 2:{
+                                    lycanEdit.changePower(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 3:{
+                                    lycanEdit.changeAbility(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 4:{
+                                    lycanEdit.changeMinion(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 5:{
+                                    lycanEdit.changeModifier(mainPlayer.getGameCharacter(), context.getScanner(),true);
+                                    break;
+                                }
+                                case 6:{
+                                    lycanEdit.changeModifier(mainPlayer.getGameCharacter(), context.getScanner(),false);
+                                    break;
+                                }
+                                case 7:{
+                                    lycanEdit.changePrincipalEquipment(mainPlayer.getGameCharacter(), context.getScanner(),true);
+                                    break;
+                                }
+                                case 8:{
+                                    lycanEdit.changePrincipalEquipment(mainPlayer.getGameCharacter(), context.getScanner(),false);
+                                    break;
+                                }
+                                case 9:{
+                                    lycanEdit.changeHeight(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 10:{
+                                    lycanEdit.changeWeight(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;    
+                                }
+                           }
+                        }while(election1!=0);
+                    }else if (mainPlayer.getGameCharacter() instanceof Hunter hunt){
+                        HunterEditCharacter huntEdit = new HunterEditCharacter(gift,armor,weapon,strength,weakness);   
+                        do{
+                            huntEdit.menu();
+                            election1=requestNumber("Escoge",0,8,context.getScanner());
+                            switch (election1){
+                                case 0:{
+                                    break;
+                                }
+                                case 1:{
+                                    huntEdit.changeName(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 2:{
+                                    huntEdit.changePower(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 3:{
+                                    huntEdit.changeAbility(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 4:{
+                                    huntEdit.changeMinion(mainPlayer.getGameCharacter(), context.getScanner());
+                                    break;
+                                }
+                                case 5:{
+                                    huntEdit.changeModifier(mainPlayer.getGameCharacter(), context.getScanner(),true);
+                                    break;
+                                }
+                                case 6:{
+                                    huntEdit.changeModifier(mainPlayer.getGameCharacter(), context.getScanner(),false);
+                                    break;
+                                }
+                                case 7:{
+                                    huntEdit.changePrincipalEquipment(mainPlayer.getGameCharacter(), context.getScanner(),true);
+                                    break;
+                                }
+                                case 8:{
+                                    huntEdit.changePrincipalEquipment(mainPlayer.getGameCharacter(), context.getScanner(),false);
+                                    break;
+                                }
+                            }
+                        }while(election1!=0);                        
+                    }
+                }
                 
             }
         }
