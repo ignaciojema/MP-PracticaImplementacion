@@ -88,6 +88,16 @@ private void resolveCombat() {
     Player p2 = challenge.getDefiedPlayer();
     int bet = challenge.getBetGold();
 
+	if (p1.getGameCharacter() == null || p2.getGameCharacter() == null) {
+		screen.clearLog();
+		screen.addLogEntry("Error: uno de los jugadores no tiene personaje.");
+		screen.addLogEntry("El combate no puede realizarse.");
+		challenge.finish(); // o challenge.cancel(), según tu modelo
+		userManager.save();
+		return;
+	}
+
+
     // Log inicial
     screen.clearLog();
     screen.addLogEntry("Combate entre " + p1.getNick() + " y " + p2.getNick());
