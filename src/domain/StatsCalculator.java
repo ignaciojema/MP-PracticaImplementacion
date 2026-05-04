@@ -14,7 +14,24 @@ public class StatsCalculator {
 	    this.DefenseStrategy= new DefenceAlgorithm(type);
 		this.type = type;
     }
+    public void resetRounds(){
+        this.rounds=0;
+    }
 
+    public int getAndResetRounds(){
+        int r=this.rounds;
+        resetRounds();
+        return r;
+    }
+
+    public void resetMinionsAlive(){
+        this.minionsAlive=false;
+    }
+    public boolean getAndResetMinionsAlive(){
+        boolean m=this.minionsAlive;
+        resetMinionsAlive();
+        return m;
+    }
 	public int calculatedamage(GameCharacter c) {
     return this.DamageStrategy.execute(c);
     }
