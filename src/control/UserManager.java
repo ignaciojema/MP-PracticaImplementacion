@@ -85,8 +85,7 @@ public class UserManager {
 		return usuarios.values();
 	}
 
-    public void setUsuarios(Map<String, User> usuarios) {
-        this.usuarios = usuarios;
-    }
-	
+        public Map<String, User> getUsuarios() {
+            return usuarios;
+        }	
 }
