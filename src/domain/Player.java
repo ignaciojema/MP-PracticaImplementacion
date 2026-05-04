@@ -22,7 +22,7 @@ public class Player extends User implements Serializable{
 	public Player(String n, String nck, String p){
 		super(n, nck, p);
 		this.registerNumber = nextRegisterNumber++;
-		gold = 0;
+		gold = 200;
    		charac = null;
 		blocked = false;
 	}
@@ -60,11 +60,8 @@ public class Player extends User implements Serializable{
 		return blocked;
 	}
 
-	public Object getCharacter() {
+	public GameCharacter getGameCharacter() {
 		return charac;
 	}
 
-	public void setCharacter(GameCharacter character) {
-		this.charac = character;
-	}
 }

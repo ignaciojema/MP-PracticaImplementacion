@@ -38,12 +38,12 @@ public class UnregisterCharacterCommand implements Command{
             return;
         }
 
-        if (player.getCharacter() == null) {
+        if (player.getGameCharacter() == null) {
             System.out.println("No tienes ningún personaje registrado.\n");
             return;
         }
 
-        player.setCharacter(null);
+        player.setGameCharacter(null);
         userManager.save();
         System.out.println("Personaje eliminado correctamente.\n");
         context.setNextMode(new MenuMode(
