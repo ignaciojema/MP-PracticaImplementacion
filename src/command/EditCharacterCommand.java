@@ -9,7 +9,6 @@ import control.UserManager;
 import domain.Armor;
 import domain.Describable;
 import domain.Discipline;
-import domain.EditGameCharacter;
 import domain.Gift;
 import domain.HunterEditCharacter;
 import domain.Player;
@@ -52,20 +51,25 @@ public class EditCharacterCommand implements Command{
 	public void execute() {
             int election=0;
             if (context.getCurrentUser() instanceof Player pl){
-                do{
-                    System.out.println("Elige que quieres cambiar");
-                    System.out.println("0) No cambiar nada");
-                    System.out.println("1) La armadura");
-                    System.out.println("2) Las armas");
-                    election = requestNumber("Escoge",0,2,context.getScanner());  
-                    HunterEditCharacter hed = new HunterEditCharacter(gift, armor, weapon, strength, weakness);
-                    if (election==1){
-                        hed.changePrincipalEquipment(pl.getGameCharacter(), context.getScanner(), true);
-                    }else{
-                        hed.changePrincipalEquipment(pl.getGameCharacter(), context.getScanner(), false);  
-                    }
-                }while (election!=0);
+                if(pl.getGameCharacter()!=null){
+                    do{
+                        System.out.println("Elige que quieres cambiar");
+                        System.out.println("0) No cambiar nada");
+                        System.out.println("1) La armadura");
+                        System.out.println("2) Las armas");
+                        election = requestNumber("Escoge",0,2,context.getScanner());  
+                        HunterEditCharacter hed = new HunterEditCharacter(gift, armor, weapon, strength, weakness);
+                        if (election==1){
+                            hed.changePrincipalEquipment(pl.getGameCharacter(), context.getScanner(), true);
+                        }else{
+                            hed.changePrincipalEquipment(pl.getGameCharacter(), context.getScanner(), false);  
+                        }
+                    }while (election!=0);
+                }else{
+                    System.out.println("No tienes un personaje para editar");
+                }
             } else{
+                
                 
             }
         }
