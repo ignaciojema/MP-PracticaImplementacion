@@ -8,7 +8,9 @@ import command.Command;
 import command.ExitBattleCommand;
 import domain.Challenge;
 import domain.ChallengeMediator;
+import domain.GameCharacter;
 import domain.Player;
+import domain.StatsCalculator;
 import interaction.BattleScreen;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,36 +84,76 @@ public class BattleMode implements Mode {
 	
 private void resolveCombat() {
 
-        Player p1 = challenge.getDefyingPlayer();
-        Player p2 = challenge.getDefiedPlayer();
-		p1.markChallengeTime();
-		p2.markChallengeTime();
-        int bet = challenge.getBetGold();
+    Player p1 = challenge.getDefyingPlayer();
+    Player p2 = challenge.getDefiedPlayer();
+    int bet = challenge.getBetGold();
 
-        screen.clearLog();
-        screen.addLogEntry("Combate entre " + p1.getNick() + " y " + p2.getNick());
-        screen.addLogEntry("Apuesta: " + bet + " oro");
-        screen.addLogEntry("");
+    // Log inicial
+    screen.clearLog();
+    screen.addLogEntry("Combate entre " + p1.getNick() + " y " + p2.getNick());
+    screen.addLogEntry("Apuesta: " + bet + " oro");
+    screen.addLogEntry("");
 
-        boolean p1Wins = Math.random() < 0.5;
+    // 1) Preparar contexto de combate con los personajes
+    context.setCharacter1(p1.getGameCharacter());
+	context.setCharacter2(p2.getGameCharacter());
 
-		if (p1Wins) {
-            screen.addLogEntry("Ganador: " + p1.getNick());
-            p1.setGold(p1.getGold() + bet);
-            p2.setGold(Math.max(0, p2.getGold() - bet));
+    // 2) Ejecutar combate automático
+    StatsCalculator calc = new StatsCalculator(challenge.getCombatType()); // o el type que uses
+    GameContext result = calc.battle(context);
+
+    // 3) Aplicar timer 24h (mejor aquí: “ha participado en combate”)
+    p1.markChallengeTime();
+    p2.markChallengeTime();
+
+    // 4) Interpretar resultado
+    if (result.getDraw()) {
+        screen.addLogEntry("Resultado: EMPATE");
+        // Política de oro en empate (elige una):
+        // a) no cambia oro
+        // b) se devuelve la apuesta (si la retenías)
+        // Aquí lo dejo como “sin cambios”
+    } else {
+
+        GameCharacter winnerChar = result.getCharacter1();
+        GameCharacter loserChar  = result.getCharacter2();
+
+        // Mapeo ganador -> Player (robusto si el objeto es el mismo)
+        Player winnerPlayer;
+        Player loserPlayer;
+
+        if (winnerChar == p1.getGameCharacter()) {
+            winnerPlayer = p1;
+            loserPlayer = p2;
+        } else if (winnerChar == p2.getGameCharacter()) {
+            winnerPlayer = p2;
+            loserPlayer = p1;
         } else {
-            screen.addLogEntry("Ganador: " + p2.getNick());
-            p2.setGold(p2.getGold() + bet);
-            p1.setGold(Math.max(0, p1.getGold() - bet));
+            // Fallback por nombre (por si el battle() devuelve nuevas instancias)
+            if (winnerChar.getName().equals(p1.getGameCharacter().getName())) {
+                winnerPlayer = p1;
+                loserPlayer = p2;
+            } else {
+                winnerPlayer = p2;
+                loserPlayer = p1;
+            }
         }
 
-        screen.addLogEntry("");
-        screen.addLogEntry("Resultado aplicado a oro. Fin del combate.");
+        screen.addLogEntry("Ganador: " + winnerPlayer.getNick());
 
-        // Estado del desafío
-        challenge.finish();
-
-        // Persistencia
-        userManager.save();
+        // Reparto de oro (tu regla actual)
+        winnerPlayer.setGold(winnerPlayer.getGold() + bet);
+        loserPlayer.setGold(Math.max(0, loserPlayer.getGold() - bet));
     }
+
+    screen.addLogEntry("");
+    screen.addLogEntry("Resultado aplicado a oro. Fin del combate.");
+
+    // 5) Estado del desafío
+    challenge.finish();
+
+    // 6) Persistencia
+    userManager.save();
+	challenge.finish();
+	}
 }

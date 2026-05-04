@@ -72,7 +72,7 @@ public class GameContext {
 		draw = b;
 	}
 
-	public boolean getDraw(boolean b) {
+	public boolean getDraw() {
 		return draw;
 	}
 }
