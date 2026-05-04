@@ -52,12 +52,17 @@ private int type;
         Iterator<Strength> it = c.getStrength().values().iterator();
         while (it.hasNext()) {
             // dmg+=((Strength) it.next()).getValue();
+            if (it.next().getType()==type){
             dmg+=it.next().getValue();
+            }
         }
         Iterator<Weakness> it1 = c.getWeakness().values().iterator();
         while (it1.hasNext()) {
             // dmg+=((Strength) it.next()).getValue();
+            if(it1.next().getType()==type){
             dmg-=it1.next().getValue();
+            }
+
         }
         
         return dmg;

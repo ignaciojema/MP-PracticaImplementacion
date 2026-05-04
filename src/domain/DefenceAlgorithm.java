@@ -49,7 +49,7 @@ private int type;
         Iterator<Weakness> it1 = c.getWeakness().values().iterator();
         while (it1.hasNext()) {
             // def+=((Strength) it.next()).getValue();
-            if (it.next().getType()==type){
+            if (it1.next().getType()==type){
             def-=it1.next().getValue();
             }
         }
